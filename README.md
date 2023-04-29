@@ -6,9 +6,9 @@ description: Propsed standard for cross-chain BRC-20 tokens
 
 ### Introduction
 
-This proposal outlines a standard to mint and redeem BRC-20 tokens (now BRC-21) that were first created on other "source" chains, such as Ethereum, Cosmos, Polkadot, or Interlay.
+This proposal outlines a standard to mint and redeem BRC tokens to/from Bitcoin that were first created on other "source" chains, such as Ethereum, Cosmos, Polkadot, or Interlay.&#x20;
 
-**Requirements**
+**Technical Requirements**
 
 * Custom indexer that validates the BRC-21 mint, transfer, and redeem history
 * BTC-Relay: a BTC-light client implemented as a smart contract on the "source" chain, capable of verifying of inclusion of BTC transactions and parsing them. See e.g. [here](https://spec.interlay.io/spec/btc-relay/index.html) for a specification. &#x20;
@@ -17,27 +17,25 @@ This proposal outlines a standard to mint and redeem BRC-20 tokens (now BRC-21) 
 
 ### Protocol
 
-**Operations Overview**
-
 **Deploy**
 
-{&#x20;
+The deploy operation stays similar to that of BRC-20 tokens, with minor modifications.&#x20;
 
-"p": "brc-20",&#x20;
+* "max" field is made optional: max supply is defined on the source chain. Specifying it in the BRC-21 deployment is hence optional but can serve as a failsafe.&#x20;
+* "lim" field introduced in the BRC-20 standard is removed for scalability reasons. Since BRC-21 tokens follow strict mint and redeem rules, there is no need to impose limits on how many tokens can be minted in a single transaction.
+* "src" field added to specify the chain from which we are "importing" the tokens. Can be a string such as "Ethereum" or a unique integer identifier (would require an agreed-upon directory)
+* "cont" field added to act as unique identifier of the token on the source chain, e.g. the ERC-20 contract address on Ethereum
 
-"op": "deploy",&#x20;
-
-"tick": "COIN",&#x20;
-
-"max": "21000000" (optional),&#x20;
-
-~~"lim": "1000",~~
-
+```
+{ 
+"p": "brc-21", 
+"op": "deploy", 
+"tick": "COIN", 
+"max": "10000000" (optional), 
 “src”: “CHAIN”,
-
-“cont”: “contract-address-on-CHAIN”&#x20;
-
+“cont”: “contract-address-on-CHAIN” 
 }
+```
 
 
 
@@ -51,21 +49,16 @@ This proposal outlines a standard to mint and redeem BRC-20 tokens (now BRC-21) 
 
 Uses a new “Redeem” BRC-20 operation that triggers redemption of the equiv. amount of underlying COIN tokens on the target chain.
 
-{&#x20;
-
-"p": "brc-20",&#x20;
-
-"op": "redeem",&#x20;
-
-"tick": "COIN",&#x20;
-
+```
+{ 
+"p": "brc-21", 
+"op": "redeem", 
+"tick": "COIN", 
 "amt": "1000",
-
 “dest”: “CHAIN”,
-
-“acc”: “account-on-CHAIN”&#x20;
-
+“acc”: “account-on-CHAIN” 
 }
+```
 
 1. Inscribe “Redeem” specifying _dest_, _acc_, and _amount_.
 2. Submit BTC tx inclusion proof to [BTC-Relay](https://spec.interlay.io/spec/btc-relay/index.html) deployed on CHAIN&#x20;
