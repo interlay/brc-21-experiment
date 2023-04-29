@@ -17,7 +17,7 @@ This proposal outlines a standard to mint and redeem BRC-20 tokens (now BRC-21) 
 
 ### Protocol
 
-
+**Operations Overview**
 
 **Deploy**
 
