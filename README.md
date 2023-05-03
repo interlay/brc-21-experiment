@@ -63,7 +63,7 @@ Transfer operation is same as in the BRC-20 protocol.
 { 
   "p": "brc-21",
   "op": "transfer",
-  "tick": "ordi",
+  "tick": "COIN",
   "amt": "100",
 }
 ```
