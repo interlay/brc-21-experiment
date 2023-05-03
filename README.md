@@ -1,5 +1,5 @@
 ---
-description: Propsed standard for cross-chain BRC-20 tokens
+description: Proposed standard for cross-chain BRC-20 tokens
 ---
 
 # BRC-21 Experiment
@@ -45,9 +45,33 @@ The deploy operation stays similar to that of BRC-20 tokens, with minor modifica
 2. Lock 100 COIN on CHAIN and pass the inscription ID to the contract
 3. Indexers will now accept the BRC-20 COIN as _valid_
 
+```
+{
+"p": "brc-21",
+"op": "mint",
+"tick": "COIN",
+"amt": "100",
+"src": "CHAIN"
+}
+```
+
+#### **Transfer**
+
+Transfer operation is extended with source chain attribute.
+
+```
+{ 
+  "p": "brc-21",
+  "op": "transfer",
+  "tick": "ordi",
+  "amt": "100",
+  "src": "CHAIN"
+}
+```
+
 **Redeem**
 
-Uses a new “Redeem” BRC-20 operation that triggers redemption of the equiv. amount of underlying COIN tokens on the target chain.
+Introduces a new “Redeem” BRC-20 operation that triggers redemption of the equivalent amount of underlying COIN tokens on the target chain.
 
 ```
 { 
