@@ -57,7 +57,7 @@ The deploy operation stays similar to that of BRC-20 tokens, with minor modifica
 
 #### **Transfer**
 
-Transfer operation is extended with source chain attribute.
+Transfer operation is same as in the BRC-20 protocol.
 
 ```
 { 
@@ -65,7 +65,6 @@ Transfer operation is extended with source chain attribute.
   "op": "transfer",
   "tick": "ordi",
   "amt": "100",
-  "src": "CHAIN"
 }
 ```
 
