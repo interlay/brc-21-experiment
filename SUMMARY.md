@@ -1,3 +1,3 @@
 # Table of contents
 
-* [BRC-21 Experiment](README.md)
+* [BRC-21 Token Standard](README.md)
